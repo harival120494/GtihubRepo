@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Container, Form } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { createRepos } from "./redux/actions/actions";
+import { Container, Form, ListGroup } from "react-bootstrap";
 import Repo from "./Components/repo/index";
 
 const GithubRepo = () => {
   const [repos, setRepos] = useState([]);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const repoUrl = `https://api.github.com/users/${e.target.value}/repos`;
@@ -17,7 +20,7 @@ const GithubRepo = () => {
           }
         );
         setRepos(reposTemp);
-        console.log(e.target.value);
+        dispatch(createRepos(reposTemp));
       })
       .catch((error) => {
         console.log(`inside getrepos error: ${error}`);
@@ -28,14 +31,16 @@ const GithubRepo = () => {
   };
 
   const ShowRepos = () => {
-    return repos.map((repo) => <Repo key={repo.name} repo={repo} />);
+    return <Repo />;
   };
 
   return (
-    <Container>
-      <Form className="mt-3">
+    <Container className="pb-5">
+      <Form className="mt-3 mb-5">
         <Form.Group className="mb-3">
-          <Form.Label>Github Username</Form.Label>
+          <Form.Label>
+            <b>Github Username</b>
+          </Form.Label>
           <Form.Control
             type="text"
             placeholder="Masukan username github anda"
@@ -44,7 +49,11 @@ const GithubRepo = () => {
         </Form.Group>
       </Form>
       <h5>List Repository : </h5>
-      {repos.length > 0 && <ShowRepos />}
+      {repos.length > 0 && (
+        <ListGroup>
+          <Repo />
+        </ListGroup>
+      )}
     </Container>
   );
 };

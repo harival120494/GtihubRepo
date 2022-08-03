@@ -1,18 +1,52 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { ListGroup, Row, Col } from "react-bootstrap";
+const Repo = () => {
+  const repos = useSelector((state) => state.reducerRepo)[0];
 
-const Repo = ({
-  repo: { name, language, html_url, created_at, description },
-}) => {
-  return (
-    <React.Fragment>
-      <li>
-        <div>Name: {name}</div>
-        {language && <div>Language: {language}</div>}
-        {html_url && <div>HTML_Url: {html_url}</div>}
-        {created_at && <div>Created At: {created_at}</div>}
-        {description && <div>Description: {description}</div>}
-      </li>
-    </React.Fragment>
-  );
+  return repos.map((t, idx) => (
+    <ListGroup.Item key={idx}>
+      <Row>
+        <Col xl={2} md={2} sm={2}>
+          Nama Repository
+        </Col>
+        <Col xl={5} md={5} sm={5}>
+          : {t.name}
+        </Col>
+      </Row>
+      <Row>
+        <Col xl={2} md={2} sm={2}>
+          Language
+        </Col>
+        <Col xl={5} md={5} sm={5}>
+          : {t.language}
+        </Col>
+      </Row>
+      <Row>
+        <Col xl={2} md={2} sm={2}>
+          URL
+        </Col>
+        <Col xl={5} md={5} sm={5}>
+          : {t.html_url}
+        </Col>
+      </Row>
+      <Row>
+        <Col xl={2} md={2} sm={2}>
+          Tgl. Dibuat
+        </Col>
+        <Col xl={5} md={5} sm={5}>
+          : {t.created_at}
+        </Col>
+      </Row>
+      <Row>
+        <Col xl={2} md={2} sm={2}>
+          Deskripsi
+        </Col>
+        <Col xl={5} md={5} sm={5}>
+          : {t.description}
+        </Col>
+      </Row>
+    </ListGroup.Item>
+  ));
 };
 export default Repo;
