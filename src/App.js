@@ -31,10 +31,6 @@ const GithubRepo = () => {
       });
   };
 
-  const ShowRepos = () => {
-    return <Repo />;
-  };
-
   return (
     <Container className="pb-5">
       <Form className="mt-3 mb-5">
