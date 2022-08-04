@@ -7,6 +7,7 @@ import Repo from "./Components/repo/index";
 
 const GithubRepo = () => {
   const [repos, setRepos] = useState([]);
+  const [failed, setFailed] = useState(null);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -19,14 +20,14 @@ const GithubRepo = () => {
             return { name, language, html_url, created_at, description };
           }
         );
+        setFailed(null);
         setRepos(reposTemp);
         dispatch(createRepos(reposTemp));
       })
       .catch((error) => {
-        console.log(`inside getrepos error: ${error}`);
-        this.setState({
-          errorMessage: error.response.statusText,
-        });
+        setRepos([]);
+        dispatch(createRepos([]));
+        setFailed("Oopss.. Tidak ada repository yang di temukan");
       });
   };
 
@@ -54,6 +55,7 @@ const GithubRepo = () => {
           <Repo />
         </ListGroup>
       )}
+      {failed !== null && failed}
     </Container>
   );
 };
